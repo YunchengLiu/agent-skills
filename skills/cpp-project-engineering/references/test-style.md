@@ -28,7 +28,8 @@ Before editing and before finalizing a new or changed test:
 7. Do not use a first-line comment to translate the case name, restate obvious
    assertions, or narrate Arrange/Act/Assert.
 8. Test the project's abstraction and contract, not raw standard-library,
-   language, or third-party behavior.
+   language, or third-party behavior such as copyability, movability,
+   `noexcept`, or declared types.
 9. Keep only cases that add an independent failure signal.
 10. Cover normal supported behavior and each meaningful supported-domain
     boundary or runtime failure form introduced or changed by the task. Do not

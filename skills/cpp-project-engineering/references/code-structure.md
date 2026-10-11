@@ -102,6 +102,9 @@ namespace, class, declaration, nearby comment, and local code.
   phase names, explanatory diagrams, or pseudocode names.
 - Public names must remain clear to callers who do not know private
   implementation structure.
+- Keep acronyms uppercase, such as `ID`, `ISO`, and `UTF8`. An acronym that
+  begins a camelBack or snake_case name is lowercase, such as `isoWeek` and
+  `user_id`.
 
 Prefer:
 
@@ -135,6 +138,11 @@ Use logical dependency order rather than mechanically grouping access blocks:
 3. public functions;
 4. protected functions;
 5. private helper functions.
+
+Declare special members first among the public functions, in the order
+constructors, destructor, copy, move. Declare a destructor only together with
+all copy and move operations, even when each is `= default`; otherwise declare
+constructors only.
 
 Multiple access blocks are allowed when a public nested declaration must appear
 before private data. A nested enum, alias, or helper type that is itself public
