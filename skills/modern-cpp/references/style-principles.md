@@ -49,7 +49,18 @@ Apply these semantic style defaults across projects unless the repository define
 - Use stronger types when they prevent a realistic misuse, preserve an
   important invariant, or establish a meaningful boundary. Semantic distinction
   alone does not require a wrapper type.
-- Use `const`, `constexpr`, and `noexcept` when they are correct and helpful, not by reflex.
+- Apply specifiers, qualifiers, attributes, and type deduction whenever what
+  they express is true of the code; omit one only when it is false or
+  uncertain, or would require reshaping the design. In particular:
+  - decide `noexcept` from the implementation and mark every function that
+    cannot throw;
+  - make unmodified locals and by-value parameters `const`, on the definition
+    only when the declaration is separate;
+  - mark error and exception branches `[[unlikely]]`;
+  - use `[[nodiscard]]` where ignoring the result is likely a mistake, and
+    `auto` where the initializer already shows the type;
+  - use `constexpr` where the implementation supports compile-time evaluation
+    as written.
 - Keep error handling explicit. Choose mechanisms that match the contract and the calling style.
 
 ## Public documentation
