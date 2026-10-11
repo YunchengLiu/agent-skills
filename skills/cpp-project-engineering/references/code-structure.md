@@ -94,6 +94,10 @@ namespace, class, declaration, nearby comment, and local code.
   distinction within that scope; omit words whose meaning it already establishes.
 - Do not encode a full definition, every precondition, or implementation detail
   into one identifier so it can stand alone outside its context.
+- Prefer a short verb or noun for a function, such as `from`, `as`, `parse`, or
+  `instant`; overloads, parameter types, the class, and the namespace carry the
+  remaining distinctions. Choose the word from the operation's function, what it
+  shares with related APIs, and its context, and keep related names parallel.
 - Established local and domain abbreviations are valid when unambiguous. Expand
   them when several similar values are in scope or the role or unit would be
   hidden.
@@ -125,6 +129,10 @@ Avoid names such as `FillingEdgeTable` inside `project::filling` or
 Where the owner already establishes the directory and relative-path context,
 use `findLatestRefs()` rather than
 `findLatestRelativeReferencesInsideCurrentDirectory()`.
+Prefer `DateTime::from(file_time)` and `value.asZone(zone)` over
+`DateTime::fromFileTimeType(file_time)` and `value.withZoneSameInstant(zone)`;
+pair a free `timeT(time_point)` with a member `value.timeT()` rather than giving
+them unrelated names.
 Use `inv_k` with the `dx/dy` comment above instead of encoding its definition
 as `step_value_of_x_when_y_increases_one` or
 `inverse_value_of_the_scan_edge_slope`.

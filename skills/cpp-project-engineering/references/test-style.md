@@ -95,7 +95,10 @@ StorageLimitsTest
 ```
 
 Avoid outcome or catch-all suite names such as `WorksTest`,
-`ShouldResolveReferencesCorrectlyTest`, and `EdgeCasesAndFailuresTest`.
+`ShouldResolveReferencesCorrectlyTest`, and `EdgeCasesAndFailuresTest`. A fixture
+takes the suite's name; a case name adds only the behavior and does not repeat
+the suite's subject, such as `TestAsZoneKeepsInstant` in `DateTimeTest` rather
+than `TestDateTimeAsZoneReturnsSameInstantInAnotherZone`.
 
 Case names describe one behavior:
 

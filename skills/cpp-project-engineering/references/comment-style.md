@@ -18,22 +18,27 @@ English under the main skill.
 
 ## Commenting Stance
 
-Write for a maintainer who understands ordinary C++ and can read nearby code,
-but does not automatically know the current module, domain model, pipeline,
-task discussion, or design history.
+Comments serve two readers with different needs.
 
-A comment supplies what the signature, type, names, and applicable surrounding
-context cannot. When drafting a new or substantively revised comment, first
-cover the contract or component model the declaration area must carry, then
-remove repetition from that draft. Apply the preservation rules above to
-existing comments. Complete means enough to understand, use, and maintain the
-code in context; it does not mean proving that no misuse is possible.
+- A caller treats a public API as a black box and reads only its declaration.
+  Tell the caller plainly what the API does, how to use it, and what to watch
+  for. Design deliberation, rejected alternatives, and implementation detail do
+  not help the caller; a comment that leaves the function unclear fails however
+  much else it contains.
+- A maintainer reads the implementation and needs the model behind it: the
+  strategy, invariants, data flow, and reasons for non-obvious choices. Write
+  maintenance comments proactively. Introduce a complex function at the top of
+  its body, with a compact ASCII diagram when the structure is easier to see
+  than to read, then explain the key points where they occur, so that comments
+  and code guide the reader together.
 
-The reader's ordinary C++ knowledge and the limiting context govern every
-content item below. Describe domain meaning and constraints beyond what they
-establish, including non-obvious ownership or lifetime requirements. Ordinary
-language or smart-pointer semantics alone do not need explanatory prose.
-Mechanical rules apply exactly regardless of how much explanation is needed.
+Both readers know ordinary C++ but not the current module, domain model,
+pipeline, task discussion, or design history. A comment supplies what the
+signature, type, names, and applicable surrounding context cannot; ordinary
+language or smart-pointer semantics need no prose. Complete means enough to
+understand, use, and maintain the code in context; it does not mean proving
+that no misuse is possible. Mechanical rules apply exactly regardless of how
+much explanation is needed.
 
 Readable, idiomatic Chinese is required. Establish the facts and structure
 first, then write as a fluent Chinese-speaking maintainer would explain them.
@@ -43,54 +48,56 @@ most natural description; use it when it contributes needed meaning.
 
 ## Hard Checklist
 
-For header and non-test source comments, apply items 1–11. Item 12 applies to
-every source comment, including test first-line comments.
-This is the executable checklist; the sections below explain its application.
+Apply items 1–7 to header and non-test source comments and item 8 to every
+source comment, including test first-line comments. The sections below explain
+and illustrate each item.
 
-1. Model the reader above. A public API caller reads declarations without
-   implementation knowledge.
-2. Use the applicable limiting context. A public comment may rely on its public
-   namespace, type, declaration, and adjacent public comments, but not on
-   implementation. An internal comment may also rely on adjacent implementation.
-3. For a non-obvious type or module-facing operation, make the declaration area
-   establish what the component is, what it produces or changes, and why that
-   result exists. Internal headers may include the stable pipeline role or
-   consumer; public headers express only caller-visible purpose and use.
-   A complex or special type establishes its use model in the opening paragraph.
-4. In a new or substantively revised comment, cover the required contract and
-   model, then keep maintenance information the context does not already carry.
-   Omit a new comment when none remains. Existing comments follow Scope's
-   preservation rules.
-5. Draft a public API top-down: caller-visible role or transformation first,
-   remaining observable contract in the correct Doxygen tags, then reread it as
-   a caller and rewrite it as natural Chinese.
-6. Describe the current symbol and stable system role, not the task, prompt,
-   spec wording, phase, patch, review history, or incidental call sequence. Do
-   not import pseudocode terms unless they are established project or domain
-   concepts. Public header comments must not use task-relative wording such as
-   `这里`, `上面`, `下面`, `本次`, or `后续`.
-7. Keep public API documentation to observable behavior, inputs, return
-   meaning, ownership or lifetime, failure form, and important boundaries. For
-   these categories, supply what callers need beyond the declaration and its
-   public context; each API need not restate all of them. Internal comments may
-   explain a stable implementation model or integration role needed by
-   maintainers. Keep the tone neutral and understandable.
-8. For new, changed, or migrated implementation, check that non-obvious
-   strategy, state transitions, data flow, invariants, index relationships, and
-   boundary-preserving reasons have the maintenance explanation they need.
-   A clear API comment does not replace that explanation. Do not translate
-   nearby statements step by step.
-   Do not write internal validation steps in checklist voice or describe
-   recovery/reset procedures for states no supported path produces.
-9. Keep established domain terms and acronyms stable. Prefer natural Chinese
-   over copied low-value identifiers or English fragments.
-10. Use enough detail for the missing model. Length is not a target: do not add
-    boilerplate, and do not compress a complex explanation until it is cryptic.
-11. Give every Doxygen tag its own responsibility. Do not put return meaning,
-    parameter rules, or failure form into `@note`, and do not promote an ordinary
-    fact into `@note` or `@warning`. Use noun-centered language for types,
-    results, and fields; verbs for behavior; predicates for boolean queries.
-12. Apply the mechanical format exactly:
+1. **Reader.** Decide whether the comment serves a caller of the public API or
+   a maintainer of the implementation. A public comment relies only on the
+   public namespace, type, declaration, and adjacent public comments; an
+   internal comment may also rely on adjacent implementation.
+2. **Public API content.** Write top-down: what the API does, how to use it,
+   and what to watch for, in plain direct sentences. Cover observable behavior,
+   inputs, result, ownership or lifetime, failure form, and important
+   boundaries as the caller needs them. Show accepted inputs by example rather
+   than by a grammar or a list of boundary cases. Leave out design history,
+   implementation detail, and task-relative wording such as `这里`, `上面`,
+   `下面`, `本次`, or `后续`. A non-obvious type opens with its role and use
+   model.
+3. **Public API form.** Document the public API with Doxygen (`///`).
+   Internal declarations, including detail namespaces, private members, and
+   internal headers, need not use Doxygen; concise `//` maintenance comments
+   suffice. A documented public function has
+   `@brief`, one blank comment line, then its tags:
+   - `@brief` is one complete sentence naming what the function acts on and
+     what it produces;
+   - every parameter has an `@param` entry and every template parameter,
+     including a deduced one, a `@tparam` entry; a short entry suffices when
+     the name already says most of it;
+   - a remark about one parameter or the result goes in that entry; `@details`
+     and `@note` hold only what applies to the whole declaration;
+   - each tag keeps the responsibility given in Doxygen Tag Responsibilities.
+
+   A parameterless trivial accessor needs at most its brief. An operator needs
+   only a brief and any `@exception`, shared across its family with `@copydoc`.
+4. **Maintenance content.** For new, changed, or migrated implementation, give
+   non-obvious strategy, state transitions, data flow, invariants, index
+   relationships, and boundary-preserving reasons the explanation they need,
+   introducing a complex function at the top of its body. A clear API comment
+   does not replace this. Do not narrate nearby statements, write validation
+   steps in checklist voice, or describe recovery for states no supported path
+   produces.
+5. **New and revised comments.** Cover the required contract or model, then
+   keep only what the context does not already carry; omit a new comment when
+   nothing remains. Existing comments follow Scope's preservation rules.
+6. **Wording.** Keep established domain terms and acronyms stable and prefer
+   natural Chinese over copied low-value identifiers. Use noun-centered
+   language for types, results, and fields, verbs for behavior, and predicates
+   for boolean queries. Match the detail to the missing model: no filler
+   sentences, and no compression into cryptic text.
+7. **Content before layout.** Settle the content first. The formatter owns
+   wrapping; never cut, reword, or move facts between tags to fit a line.
+8. **Mechanical format.** Apply exactly:
     - Use ASCII punctuation. The enumeration mark `、` is the sole exception.
     - Follow an in-prose comma, semicolon, or colon with exactly one ASCII
       space.
@@ -246,6 +253,10 @@ missing unit, reference frame, side effect, lifetime, or failure form:
 
 ```cpp
 /// @brief 平移整条扫描路径, 坐标单位为微米
+///
+/// @param dx x方向偏移
+/// @param dy y方向偏移
+/// @param dz z方向偏移
 /// @exception std::invalid_argument 偏移量不是有限值时抛出
 ScanPath& translate(double dx, double dy, double dz);
 ```
@@ -289,16 +300,20 @@ Label the model being shown and keep the diagram local to the code it explains.
 
 ## Doxygen Tag Responsibilities
 
-- `@brief`: one natural sentence stating the stable role, operation,
-  transformation, or result in its declaration context.
+- `@brief`: one natural, complete sentence stating the stable role, operation,
+  transformation, or result in its declaration context. For an operation, name
+  what it acts on and what it produces.
 - `@details`: caller-visible scope, interpretation, evaluation, coverage, or a
   maintainer model that cannot fit naturally in the brief. Internal declarations
   may explain a stable algorithm or pipeline; public declarations describe
   sequence only when it is caller-visible behavior. Keep default-behavior
   reminders, transient reminders, statement-by-statement narration, and failure
-  lists out of this tag.
-- `@param`: input meaning, unit, accepted range, ownership, or default semantics
-  that the type and name do not already make clear.
+  lists out of this tag. A remark about one parameter or the result belongs in
+  that `@param` or `@return`.
+- `@tparam`: the kinds of types a template parameter accepts.
+- `@param`: input meaning, plus any unit, accepted range, ownership, default
+  semantics, or remark specific to that parameter. Show accepted text forms by
+  example rather than by a full grammar.
 - `@return`: result meaning, value categories, ownership, and observable
   boundaries.
 - `@exception`: the stable direct failure type and trigger condition. Do not
@@ -310,8 +325,8 @@ Label the model being shown and keep the diagram local to the code it explains.
 - `@warning`: a condition whose omission is likely to cause dangerous or serious
   misuse. Use `@note` or ordinary prose for normal boundaries.
 
-Do not make an exhaustive tag set a goal. Use only tags that carry needed
-information.
+Beyond the required `@param` and `@tparam` entries, use only tags that carry
+needed information.
 
 For a stream operation, distinguish the result from failure and configuration:
 
