@@ -91,13 +91,15 @@ await confirmation. Make local mechanical choices directly.
 Before creating an independent construct or changing its file ownership, name
 declaration, implementation, test, and build-registration locations.
 
-When a design is settled, use that design and write the applicable landing
-plan. Check it against repository reality. Reopen only a conflicting point
-supported by code, an existing contract, or a reproducible failure. Present
-1-3 grounded options with a recommended tradeoff; proceed on independent parts
-and identify the blocked point explicitly. If missing observable behavior
-blocks implementation, ask the user to choose. Make local mechanical choices
-directly.
+When a design is settled, use that design and write the applicable landing plan.
+Check it against repository reality. An existing component's established
+semantics and conventions are part of the settled design: a new member follows
+them, and a case they already decide is not a reason to reopen them. Reopen only
+a conflicting point supported by code, an existing contract, or a reproducible
+failure. Present 1-3 grounded options with a recommended tradeoff; proceed on
+independent parts and identify the blocked point explicitly. If missing
+observable behavior blocks implementation, ask the user to choose. Make local
+mechanical choices directly.
 
 When a spec defines phases, complete the agreed phase and report decisions,
 deviations, validation, and risks before moving to the next, unless several
@@ -105,13 +107,24 @@ phases were requested together.
 
 ### Implement And Verify
 
-Every changed line and new construct must trace to the request, a repository
-rule, or a concrete failure found while implementing. Use the established
-context to judge each part's contribution: names, types, comments, and code
-carry meaning together, and downstream code uses guarantees already established
-at their owner. Add a mechanism, qualification, or check for a remaining need;
-local self-containment alone does not justify it. Applicable hard rules still
-govern every retained part.
+The authorized request and its necessary ripple define the scope: the affected
+callers, documentation, tests, build registration, and other artifacts the
+change requires, and the changes repository rules require for that work. Every
+changed line and new construct must trace to that scope, including concrete
+failures the work causes or that block it. Use the established context to judge
+each part's contribution: names, types, comments, and code carry meaning
+together, and downstream code uses guarantees already established at their
+owner. Add a mechanism, qualification, or check for a remaining need; local
+self-containment alone does not justify it. Applicable hard rules still govern
+every retained part.
+
+When concrete evidence shows that the request needs work beyond that scope,
+report the expansion and obtain confirmation before making it; a report alone
+grants no authorization. Report unrelated defects and improvement opportunities
+separately without changing them. When the user corrects a premise, design
+choice, or scope, recheck the implementation, tests, comments, configuration,
+and remaining plan derived from it; revise what the correction invalidates and
+keep the work that remains valid.
 
 Keep the touched area coherent with the references below. Add tests for changed
 behavior and meaningful supported boundaries. Verify third-party APIs against
@@ -124,11 +137,10 @@ user-authored comments retain their wording. Keep deliverables complete and
 free of placeholders, dead code, unexplained fallback paths, secrets, and
 task-history text.
 
-Report a material scope expansion when concrete evidence shows that the agreed
-change is insufficient. Keep refactors behavior-preserving unless behavior
-changes are part of the request. For a failure-driven refactor, explain the
-root cause and correct the design; do not silence the failure, weaken a valid
-test, or shift the problem to a third party. Complete the closing checks in
+Keep refactors behavior-preserving unless behavior changes are part of the
+request. For a failure-driven refactor, explain the root cause and correct the
+design; do not silence the failure, weaken a valid test, or shift the problem to
+a third party. Complete the closing checks in
 [validation-and-review.md](references/validation-and-review.md) before delivery.
 
 ## References

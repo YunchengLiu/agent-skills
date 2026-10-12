@@ -150,6 +150,12 @@ project-required check to reduce the diff.
 For a mechanical checklist, compare each changed line with its removal or the
 simpler form, then check every retained line against that checklist.
 
+When a defect is found during the work or a review, including one the user
+reports, identify its root cause or the rule it violates, then check the whole
+current diff, including new files, for the same class. When implementing, fix
+the instances within the authorized scope together with their affected callers,
+tests, and documentation, and report the others; a review reports all of them.
+
 ### 4. Evidence
 
 Record exactly which formatter, builds, tests, static analysis, release,

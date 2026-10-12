@@ -59,7 +59,8 @@ Keep these basic requirements in either case:
 - Clarify unsettled behavior and material boundaries from evidence. Implement
   settled designs faithfully; reopen only a concrete conflict and choose local
   mechanics directly. Identify applicable declaration, implementation, test,
-  and build locations. Report necessary scope expansion before proceeding.
+  and build locations. Obtain confirmation before expanding scope beyond the
+  request and its necessary ripple; a report alone grants no authorization.
 - Use the declared standard, configured dependencies, build tools, and
   formatter. Follow established file ownership and naming. Source comments
   use zh-CN; runtime-visible strings use English.

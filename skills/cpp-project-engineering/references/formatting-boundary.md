@@ -11,9 +11,13 @@ boundary, not by the directory containing the code.
    Public signatures and macros, required formatter hooks, installed headers'
    required compile paths, exported targets, and package dependency files must
    not require fmtlib.
-2. **Optional public fmtlib extensions are consumer opt-in.** They must be
-   optional at compile time, leave the normal public API usable without fmtlib,
-   and add no public or exported fmt dependency.
+2. **Optional public fmtlib support follows fmtlib availability.** A public
+   type with a `std::formatter` also specializes `fmt::formatter`. That
+   specialization and any other optional public fmtlib extension are enabled
+   only when `<fmt/format.h>` is available, detected with `__has_include` or the
+   project's wrapper for it. Never add a fmtlib dependency, include path, or
+   link target to enable them; they leave the normal public API usable without
+   fmtlib and add no public or exported fmt dependency.
 3. **Internal implementation and final terminal programs use fmtlib by
    default.** Preserve direct standard-library paths at real standard-library
    boundaries. Do not add adapters or duplicate formatter stacks merely to
@@ -35,9 +39,9 @@ boundary, not by the directory containing the code.
 
 fmtlib linkage follows the same boundary: private for internal implementation
 and final terminal programs, absent from examples and required public/exported
-dependencies. Before adding an include or target dependency, verify that fmtlib
-is present in the project's dependency declaration and give the owning target
-the narrowest correct visibility.
+dependencies. Before adding an unguarded include or a target dependency, verify
+that fmtlib is present in the project's dependency declaration and give the
+owning target the narrowest correct visibility.
 
 The required public std-only boundary takes precedence over the internal fmtlib
 default. For an exported static library, `PRIVATE` does not remove the final
