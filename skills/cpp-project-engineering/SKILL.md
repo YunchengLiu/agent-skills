@@ -62,9 +62,11 @@ and any constraints on exceptions, allocation, threading, or exported interfaces
 In an unfamiliar area, read an established project example for comment depth,
 test style, file layout, and CMake wiring.
 
-Model the reader as a competent C++ maintainer who can read nearby code but may
-not know this component or its domain. Explain the role and model that reader
-needs; let names, types, declarations, and nearby context carry meaning together.
+Assume readers know C++ and the basic subject, but not the component's specific
+model or conventions. Public declarations and documentation must suffice for
+callers; implementation and local comments together must let maintainers follow
+the execution and understand its key reasons. Apply the reader and placement
+rules in [comment-style.md](references/comment-style.md).
 
 Use clear, idiomatic language in explanations and collaboration. State the
 required behavior and conditions directly; use prohibitions for concrete
@@ -132,10 +134,10 @@ the dependency manifest and target graph before using them.
 For API documentation, prefer Context7 when available; otherwise use library
 documentation, source, or web research to resolve uncertain API details.
 
-Source comments use zh-CN; runtime-visible strings use English. Accurate
-user-authored comments retain their wording. Keep deliverables complete and
-free of placeholders, dead code, unexplained fallback paths, secrets, and
-task-history text.
+Source comments follow the project language rules, defaulting to zh-CN;
+runtime-visible strings use English. Accurate user-authored comments retain
+their wording. Keep deliverables complete and free of placeholders, dead
+code, unexplained fallback paths, secrets, and task-history text.
 
 Keep refactors behavior-preserving unless behavior changes are part of the
 request. For a failure-driven refactor, explain the root cause and correct the

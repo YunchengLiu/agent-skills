@@ -6,8 +6,9 @@ Apply when adding or editing C++ unit tests. The naming rules below apply when
 the project uses GoogleTest; otherwise preserve the same behavioral principles
 through the project's established test framework and naming convention.
 
-Test explanation comments use zh-CN and follow the mechanical rules in
-[comment-style.md](comment-style.md).
+Test explanation comments follow the language, preservation, and mechanical
+rules in [comment-style.md](comment-style.md), including project-specific
+overrides.
 
 ## Hard Checklist
 
@@ -167,9 +168,10 @@ TEST(FillHolesTest, TestFillsSingleHole) {
 }
 ```
 
-If deleting the comment loses no useful information, delete it. Shared setup
-belongs in a fixture or local builder; repeated data-shape details belong in a
-helper name rather than every case name.
+When drafting a comment, omit it if it adds no useful information. Existing
+comments follow the preservation rules in [comment-style.md](comment-style.md).
+Shared setup belongs in a fixture or local builder; repeated data-shape details
+belong in a helper name rather than every case name.
 
 Move context into a fixture when every case shares the same setup mode. Use a
 helper or local builder whose name states the data shape when setup detail would

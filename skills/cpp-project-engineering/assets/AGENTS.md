@@ -63,7 +63,8 @@ Keep these basic requirements in either case:
   request and its necessary ripple; a report alone grants no authorization.
 - Use the declared standard, configured dependencies, build tools, and
   formatter. Follow established file ownership and naming. Source comments
-  use zh-CN; runtime-visible strings use English.
+  follow the project language rules, defaulting to zh-CN; runtime-visible
+  strings use English.
 - Test changed behavior, supported boundaries, and failure forms. Preserve
   meaningful coverage. Before delivery, check necessity, contracts, affected
   callers, comments, tests, and build wiring; run change-matched validation.

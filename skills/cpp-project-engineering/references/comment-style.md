@@ -12,19 +12,17 @@ the user's requested scope; stylistic uniformity, conversational wording, or
 an agent's judgment that a comment is obvious is not sufficient. Report
 uncertainty about a user-authored comment instead of silently rewriting it.
 
-Source comments use zh-CN unless a stronger project rule explicitly chooses
-another language. Runtime-visible text is not a source comment and remains
-English under the main skill.
+Source comments default to zh-CN and follow the project's permitted languages.
+Runtime-visible text is not a source comment and remains English under the
+main skill.
 
 ## Commenting Stance
 
 Comments serve two readers with different needs.
 
-- A caller treats a public API as a black box and reads only its declaration.
-  Tell the caller plainly what the API does, how to use it, and what to watch
-  for. Design deliberation, rejected alternatives, and implementation detail do
-  not help the caller; a comment that leaves the function unclear fails however
-  much else it contains.
+- A caller treats a public API as a black box, using its declaration and
+  applicable public documentation. Explain what it does, how to call it,
+  its results and failures, and the conditions needed for correct use.
 - A maintainer reads the implementation and needs the model behind it: the
   strategy, invariants, data flow, and reasons for non-obvious choices. Write
   maintenance comments proactively. Introduce a complex function at the top of
@@ -32,18 +30,20 @@ Comments serve two readers with different needs.
   than to read, then explain the key points where they occur, so that comments
   and code guide the reader together.
 
-Both readers know ordinary C++ but not the current module, domain model,
-pipeline, task discussion, or design history. A comment supplies what the
-signature, type, names, and applicable surrounding context cannot; ordinary
+Both readers know ordinary C++ and the basic subject of the API, but not the
+module's conventions, internal model, task discussion, or design history.
+A comment supplies what the signature, type, names, and applicable surrounding
+context cannot; ordinary
 language or smart-pointer semantics need no prose. Complete means enough to
 understand, use, and maintain the code in context; it does not mean proving
 that no misuse is possible. Mechanical rules apply exactly regardless of how
 much explanation is needed.
 
-Readable, idiomatic Chinese is required. Establish the facts and structure
-first, then write as a fluent Chinese-speaking maintainer would explain them.
-Use direct sentences and established terms. Preserve every contract fact and
-mechanical rule while polishing. A phrase from the signature may also be the
+Use readable, idiomatic prose in the chosen language. Establish the facts
+and structure first, then write as a fluent speaker would explain them to
+the intended reader. Use direct sentences and established terms. Preserve
+every contract fact and mechanical rule while polishing. A phrase from the
+signature may also be the
 most natural description; use it when it contributes needed meaning.
 
 ## Hard Checklist
@@ -53,15 +53,17 @@ source comment, including test first-line comments. The sections below explain
 and illustrate each item.
 
 1. **Reader.** Decide whether the comment serves a caller of the public API or
-   a maintainer of the implementation. A public comment relies only on the
-   public namespace, type, declaration, and adjacent public comments; an
-   internal comment may also rely on adjacent implementation.
+   a maintainer of the implementation. Classify by intended use, not symbol
+   export. A public comment relies on the declaration and applicable public
+   documentation; an internal comment may also rely on nearby implementation.
 2. **Public API content.** Write top-down: what the API does, how to use it,
    and what to watch for, in plain direct sentences. Cover observable behavior,
    inputs, result, ownership or lifetime, failure form, and important
    boundaries as the caller needs them. Show accepted inputs by example rather
-   than by a grammar or a list of boundary cases. Leave out design history,
-   implementation detail, and task-relative wording such as `这里`, `上面`,
+   than by a grammar or a list of boundary cases. When a mechanism affects
+   correct use, state the resulting public behavior or caller obligation.
+   Private representations and execution steps belong in maintenance comments.
+   Leave out design history and task-relative wording such as `这里`, `上面`,
    `下面`, `本次`, or `后续`. A non-obvious type opens with its role and use
    model.
 3. **Public API form.** Document the public API with Doxygen (`///`).
@@ -83,18 +85,20 @@ and illustrate each item.
 4. **Maintenance content.** For new, changed, or migrated implementation, give
    non-obvious strategy, state transitions, data flow, invariants, index
    relationships, and boundary-preserving reasons the explanation they need,
-   introducing a complex function at the top of its body. A clear API comment
-   does not replace this. Do not narrate nearby statements, write validation
-   steps in checklist voice, or describe recovery for states no supported path
-   produces.
+   introducing a complex function at the top of its body and explaining local
+   conditions and reasons beside the operations they govern. During review,
+   follow the implementation in order and check that the overview is backed
+   by these local explanations. A clear API comment does not replace this.
+   Do not narrate nearby statements, write validation steps in checklist voice,
+   or describe recovery for states no supported path produces.
 5. **New and revised comments.** Cover the required contract or model, then
    keep only what the context does not already carry; omit a new comment when
    nothing remains. Existing comments follow Scope's preservation rules.
 6. **Wording.** Keep established domain terms and acronyms stable and prefer
-   natural Chinese over copied low-value identifiers. Use noun-centered
-   language for types, results, and fields, verbs for behavior, and predicates
-   for boolean queries. Match the detail to the missing model: no filler
-   sentences, and no compression into cryptic text.
+   natural prose in the chosen language over copied low-value identifiers.
+   Use noun-centered language for types, results, and fields, verbs for
+   behavior, and predicates for boolean queries. Match the detail to the
+   missing model: no filler sentences, and no compression into cryptic text.
 7. **Content before layout.** Settle the content first. The formatter owns
    wrapping; never cut, reword, or move facts between tags to fit a line.
 8. **Mechanical format.** Apply exactly:
@@ -102,7 +106,9 @@ and illustrate each item.
     - Follow an in-prose comma, semicolon, or colon with exactly one ASCII
       space.
     - Add no spaces at Chinese-English or Chinese-identifier boundaries.
-    - Put no spaces inside or around parentheses.
+    - In prose, put no spaces inside parentheses. In Chinese prose, put no
+      spaces around them; in English prose, use normal word spacing around
+      parenthetical phrases.
     - End each logical comment line without sentence-ending punctuation. When a
       formatter wraps one sentence, keep punctuation required inside it.
     - Running prose is plain text: no backticks, emphasis, heading markers, or
@@ -118,8 +124,9 @@ the local majority.
 
 Before drafting a non-obvious component model, answer in order:
 
-1. What do the declaration and nearby context already tell the maintainer?
-2. What component-specific role, pipeline relation, or operating model is missing?
+1. Who is the intended reader, and what do the declaration and applicable
+   context already tell them?
+2. What role, relationship, or operating model does that reader still need?
 3. What does it produce or change, why does that result exist, and who uses it?
 4. Which invariant, precondition, transition, or interpretation makes the code
    understandable?
@@ -135,9 +142,13 @@ or deliberation.
    input -> operation -> observable result before writing the brief.
 2. Place each remaining fact in the tag that owns it before considering its
    removal. Observable algorithm edge cases remain part of the contract.
-3. Read the declaration as a caller without the implementation. The brief must
-   not promise more than the detailed tags. Fix awkward prose by separating
-   mixed tag responsibilities, then reread for natural Chinese phrasing.
+3. Read only the declaration and applicable public documentation as a caller
+   unfamiliar with the module. Check that they suffice to choose inputs,
+   interpret results, and handle promised failures. Each statement must
+   contribute to correct use; verify the description against the implementation
+   for accuracy and missing contract facts. The brief must not promise more
+   than the detailed tags. Fix awkward prose by separating mixed tag
+   responsibilities, then reread for natural phrasing in the chosen language.
    Preserve facts, tag responsibilities, and mechanical format while polishing.
 
 For example, a resampling operation preserves endpoints and permits a shorter
@@ -161,8 +172,9 @@ Keep the operation, inputs, result, and failures in their respective places:
 ```cpp
 /// @brief 按给定弧长间距重采样路径
 ///
+/// @param path 待重采样的路径
 /// @param spacing 目标采样间距, 单位为微米
-/// @return 包含原路径起点和终点的采样路径; 除末段外, 相邻采样点间距为spacing, 末段长度不大于spacing
+/// @return 包含原路径起点和终点的采样路径; 除末段外, 相邻采样点间的路径弧长为spacing, 末段弧长不大于spacing
 /// @exception std::invalid_argument spacing不是正有限值时抛出
 [[nodiscard]] ScanPath resample(ScanPath const& path, double spacing);
 ```
@@ -196,25 +208,22 @@ Do not restate input and output types or turn implementation order into a
 contract. State the role, operating model, invariant, produced result, or
 consumer relationship that a reader cannot recover cheaply.
 
-Weak:
+For an internal scanline component, this comment only restates its inputs
+and outputs:
 
 ```cpp
-/// @brief 以已排序边表为输入, 输出配对后的填充线段
+// 以已排序边表为输入, 输出配对后的填充线段
 class ScanlineEngine;
 ```
 
-Better:
+Explain the algorithm model and how its result is consumed:
 
 ```cpp
-/// @brief 扫描线填充的核心扫描循环
-///
-/// @details 边按下边界排序后, 扫描线沿单调方向线性推进, 而非按整数行分桶;
-/// 每条扫描线对当前活动边做Even-Odd配对, 产出该行的填充线段, 逐行回调给消费者
+// 扫描线填充的核心扫描循环
+// 边按下边界排序后, 扫描线沿单调方向线性推进
+// 每条扫描线对当前活动边做Even-Odd配对, 产出该行的填充线段, 逐行回调给消费者
 class ScanlineEngine;
 ```
-
-The second comment gives the missing algorithm model and output use. It does
-not list private storage or task history.
 
 A buffered controller needs to explain when a caller's actions take effect:
 
@@ -269,8 +278,9 @@ complete.
 
 Keep repeated semantic explanations in one closest owner:
 
-- type comment: what the component or result represents, carries, produces, and
-  how it is used;
+- public module or type comment: shared concepts and interactions needed to
+  use the API, including what a component or result represents and how it is used;
+- internal component comment: the implementation model shared by its operations;
 - field or local variant comment: the local distinction that would otherwise
   confuse maintainers;
 - function comment: responsibility, inputs, result, mutation, failure, and
@@ -303,10 +313,10 @@ Label the model being shown and keep the diagram local to the code it explains.
 - `@brief`: one natural, complete sentence stating the stable role, operation,
   transformation, or result in its declaration context. For an operation, name
   what it acts on and what it produces.
-- `@details`: caller-visible scope, interpretation, evaluation, coverage, or a
-  maintainer model that cannot fit naturally in the brief. Internal declarations
-  may explain a stable algorithm or pipeline; public declarations describe
-  sequence only when it is caller-visible behavior. Keep default-behavior
+- `@details`: caller-visible scope, interpretation, evaluation, coverage, or
+  public operating model that cannot fit naturally in the brief. For internal
+  declarations, it may explain an algorithm or pipeline. Public declarations
+  describe sequence only when it is caller-visible behavior. Keep default-behavior
   reminders, transient reminders, statement-by-statement narration, and failure
   lists out of this tag. A remark about one parameter or the result belongs in
   that `@param` or `@return`.
