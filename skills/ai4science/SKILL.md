@@ -1,7 +1,7 @@
 ---
 name: ai4science
 description: >
-  Guide stage-aware Python AI and AI4Science experiment work: clarify the
+  Guide stage-aware Python scientific and AI4Science experiment work: clarify the
   experiment stage, evaluation protocol, representation, reproducibility,
   artifacts, and framework reuse while keeping the current workflow sufficient,
   clear, maintainable, and repo-context driven.
@@ -11,7 +11,7 @@ description: >
 
 ## Purpose
 
-Use this skill to land and iterate on Python-based AI and AI4Science experiment
+Use this skill to land and iterate on Python-based scientific and AI4Science experiment
 code while keeping small experiments clean, explicit, and easy to evolve. The
 skill keeps the current repo and current scientific question in charge: inspect
 the local context, identify the smallest useful model of the problem, then add
@@ -102,6 +102,8 @@ the content; do not require a fixed format.
   machinery.
 - `references/structure-principles.md`: read when balancing clear decomposition
   against needless architecture.
+- `references/python-code.md`: read for Python implementation, refactoring,
+  review, Ruff setup, and lightweight verification.
 - `references/reproducibility-and-artifacts.md`: read when outputs,
   checkpoints, logs, or reruns are part of the task.
 - `references/boundaries.md`: read when the task may be PyTorch mechanics,
@@ -118,7 +120,8 @@ Before finalizing a recommendation or patch, verify:
 - low-information flags have been replaced by a common representation or kept
   outside the core model with a stated reason;
 - IO, preprocessing, modeling/classification, and reporting boundaries are clear;
-- metric, split, and leakage assumptions are stated or explicitly blocked;
+- for train/eval changes, metric, split, and leakage assumptions are stated
+  or explicitly blocked;
 - the design leaves repo-specific implementation details to the current code
   context instead of imposing a generic framework.
 - every added module, class, configuration layer, artifact type, or document has
