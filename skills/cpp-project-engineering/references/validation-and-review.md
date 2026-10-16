@@ -142,10 +142,16 @@ its include as well.
 ### 3. Line-Level Rule And Ablation Review
 
 Inspect every changed line against the references routed by the main skill and
-the project's closer rules. For each material construct and validation action,
-compare its removal or the simpler baseline. Remove it when behavior and
-independent evidence remain. Do not weaken a hard rule, explicit guarantee, or
-project-required check to reduce the diff.
+the project's closer rules. Check binding requirements independently of design
+tradeoffs; a benefit elsewhere does not compensate for a violation.
+
+Compare material additions and validation actions with removal, reuse, or the
+simplest compliant alternative under the same confirmed requirements. Consider
+related parts together when a direct alternative replaces their combined
+responsibility. Identify the concrete loss that would justify retaining them;
+remove them when the required behavior and independent evidence remain. Do not
+weaken a hard rule, explicit guarantee, or project-required check to reduce the
+diff.
 
 For a mechanical checklist, compare each changed line with its removal or the
 simpler form, then check every retained line against that checklist.

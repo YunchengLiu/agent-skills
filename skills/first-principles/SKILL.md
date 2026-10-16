@@ -40,8 +40,12 @@ may rely on facts and guarantees established in its applicable scope. Follow
 the task's complete path through its consumers; inspecting the whole project
 is needed only when that impact requires it.
 
-For a consequential choice, compare credible alternatives on the same
-requirements. Consult relevant evidence and mature approaches; explain the
+For a consequential choice, compare credible alternatives under the same
+established requirements, including the simplest compliant approach. Identify
+the facts that support the current choice and the evidence that would favor a
+simpler one; check those premises before deciding. Base necessity on current
+requirements and evidence. When a premise fails, revise the approach within the
+agreed scope. Consult relevant evidence and mature approaches, and identify the
 principle that makes an approach fit this problem. Resolve assumptions that
 could change the choice with a focused question, inspection, or experiment.
 
@@ -57,7 +61,9 @@ At stage boundaries, inspect the actual result for omissions and drift:
 
 1. Which requirement, invariant, useful information, or distinct acceptance
    signal would be lost?
-2. Could an existing step or smaller representation provide the same result?
+2. Could an existing method or a more direct approach meet the same requirements?
+   Consider replacing related parts together and judge the complete result;
+   dependencies within the current approach alone do not establish necessity.
 3. Does the retained part solve the stated problem at the required scope?
 
 Remove a part when the simpler version preserves the required result. Retain
