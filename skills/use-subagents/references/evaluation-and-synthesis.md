@@ -7,7 +7,8 @@ Subagent outputs are advisory. Evaluate them before using them, retry only for c
 Positive signs:
 
 - Answers the requested question directly
-- Uses the supplied context instead of generic boilerplate
+- Judges details within the supplied context, including surrounding
+  responsibilities and established guarantees
 - Provides evidence, concrete references, or traceable reasoning
 - Respects scope and non-goals
 - Distinguishes confidence from uncertainty
@@ -54,10 +55,7 @@ Compare outputs on:
 
 Agreement does not guarantee correctness. Conflict does not automatically mean one side is wrong. Identify whether disagreements come from facts, assumptions, or interpretation, keep supported overlap, and preserve unresolved uncertainty when it remains.
 
-Final synthesis checklist:
-
-- State the main conclusion.
-- State the evidence basis.
-- State what remains uncertain.
-- State the recommended next action.
-- Make clear that the final judgment belongs to the main agent.
+Lead with the conclusion and its supporting evidence. Include unresolved
+questions and next actions when they affect the conclusion, the user's decision,
+or completion of the task. Keep qualifications tied to claims actually made in
+the assessment.

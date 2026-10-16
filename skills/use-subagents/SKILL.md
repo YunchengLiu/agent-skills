@@ -121,8 +121,9 @@ combining outputs.
 ### 5. Synthesize responsibly
 
 The main agent makes the final judgment. Compare evidence quality, scope,
-assumptions, and uncertainty. State confirmed conclusions, unresolved issues,
-and the next action without treating vote count as proof.
+assumptions, and uncertainty without treating vote count as proof. State the
+conclusion and its evidence; include unresolved issues and next actions when
+they affect the user's decision or completion of the task.
 
 ## Self-check
 

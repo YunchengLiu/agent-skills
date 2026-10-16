@@ -27,11 +27,13 @@ change execution or evaluation.
 Prefer:
 
 ```text
-Assess <artifact> against <requirements and relevant repo context> without
-assuming that it passes or fails. Report only substantive conclusions about
-correctness, behavior, design, or maintainability, and support each with
-concrete evidence. If no substantive issue is found, state that directly.
-Distinguish confirmed findings from uncertainty.
+Assess <artifact> against <requirements and relevant context> without
+assuming that it passes or fails. Account for surrounding responsibilities
+and guarantees when judging individual parts. Report substantive conclusions
+about correctness, behavior, design, or maintainability with concrete evidence.
+For each finding, identify the violated requirement or the concrete consequence.
+If no substantive issue is found, state that directly. Distinguish confirmed
+findings from uncertainty that affects the assessment.
 ```
 
 Do not write prompts such as:
@@ -75,13 +77,10 @@ repo-native form.
 
 ## Output Shaping
 
-Constrain output only when it aids evaluation. A compact review may request:
-
-- conclusion;
-- evidence;
-- substantive findings;
-- uncertainty;
-- recommended next action.
+Constrain output only when it aids evaluation. A compact review can report the
+conclusion, supporting evidence, and substantive findings in order of importance.
+Include unresolved questions and next actions when they affect the assessment
+or the user's decision.
 
 Do not require a finding count, severity distribution, approval verdict, or
 tradeoff matrix unless the task genuinely needs one.
