@@ -1,6 +1,8 @@
 # Stage Principles
 
-Treat project stage as the main decision input.
+Treat project stage as the main input for engineering structure, recordkeeping,
+and recovery support. Choose scientific evidence for the question and claims
+being evaluated; use the stage to set the depth appropriate to the current work.
 
 ## Early setup or local debugging
 

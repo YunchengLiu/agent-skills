@@ -10,7 +10,9 @@
 
 - Do not silently create environments, install dependencies, or switch dependency ownership.
 - Follow the project's existing dependency mechanism when possible.
-- If compatibility is uncertain, inspect first and ask the user before proposing changes as ready.
+- Resolve compatibility questions by inspecting the active environment and
+  official documentation. Use verified behavior directly; ask before changing
+  the environment or committing to a necessary choice that remains unresolved.
 
 ## Portability matters early
 
