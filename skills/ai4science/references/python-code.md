@@ -21,6 +21,36 @@
   interface and report what remains unverified. Do not change scientific inputs
   or recovery logic to accommodate agent access limitations.
 
+## Formula Notation and Comments
+
+- In formula-driven code, use the notation of the domain, paper, or algorithm
+  when it is clear in the local context and does not conflict with repo
+  conventions. Names such as `x`, `y`, `x1`, `y2`, `alpha`, `beta`, `k`, and
+  `phi` can be the clearest link between the formula and its implementation.
+  Preserve meaningful short names rather than expanding them for length alone.
+- A local mathematical function can retain its name from the formula. Give a
+  function with an independent computational role a name that identifies that
+  role; retain existing clear names during review or refactoring.
+- For a core calculation, briefly state what it computes, the corresponding
+  formula, and the units or conventions needed to read it. Add a source or
+  equation number for a non-obvious external method. Use readable text or math
+  notation; include derivation details only when needed to understand the code.
+
+For example, with positive `sigma` established at the owning input boundary:
+
+```python
+import numpy as np
+
+
+def gaussian(x, y, sigma):
+    """Evaluate g = exp(-(x² + y²) / (2σ²)); x, y, sigma share length units."""
+    return np.exp(-(x**2 + y**2) / (2 * sigma**2))
+```
+
+The symbols and formula make this local calculation readable without verbose
+parameter names or repeated boundary checks. Follow the repo's comment language
+and document additional array conventions when they affect the interface.
+
 ## Ruff Configuration
 
 - Use Ruff as the standard Python linter and formatter. On the first relevant

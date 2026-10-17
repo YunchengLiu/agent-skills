@@ -1,4 +1,4 @@
 interface:
   display_name: "AI4Science"
-  short_description: "Pragmatic, maintainable AI research workflows"
-  default_prompt: "Use $ai4science to keep this research workflow clear, sufficient, reproducible, and easy to maintain."
+  short_description: "Research assistance grounded in practical conditions"
+  default_prompt: "Use $ai4science to complete this research task within its agreed scope, choosing methods for the available data and practical conditions, and reporting useful results and tradeoffs."

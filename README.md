@@ -16,7 +16,7 @@ research work.
 | spec-driven-dev | Design, write, review, and implement development specs |
 | use-subagents | Delegate useful independent work and assess its results |
 | personal-markdown-note-writer | Turn source material into lasting Chinese notes |
-| ai4science | Develop and iterate on scientific experiment code |
+| ai4science | Assist user-directed scientific analysis, implementation, and evaluation |
 | pytorch | Build readable single-machine PyTorch implementations |
 
 ## Usage

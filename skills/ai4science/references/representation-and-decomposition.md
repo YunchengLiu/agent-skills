@@ -7,6 +7,10 @@ edge cases through the same meaningful dimensions when the semantics stay clear.
 Organize the workflow only as much as needed to keep the current research path
 clear and maintainable.
 
+Choose quantities that the available observations, domain knowledge, and
+intended use can support. Read [scientific reasoning](scientific-reasoning.md)
+when data coverage, acquisition cost, or practical conditions affect this choice.
+
 ## Representation Method
 
 Use this sequence before adding fields, schemas, or feature tables:
@@ -55,40 +59,20 @@ Example pattern:
 This example is a pattern, not a fixed schema. Choose the boundary value from
 the current code, math, serialization format, and tests.
 
-## Decomposition Method
+## Decomposition
 
-Reason about common research stages such as:
+Keep the IO, preprocessing, modeling, and reporting flow clear while choosing
+code boundaries from actual reuse, shared state, and verification needs. Read
+[structure principles](structure-principles.md) when deciding how to split it.
 
-- IO and dataset discovery;
-- deterministic preprocessing or feature extraction;
-- model inference, classification, or scoring;
-- evaluation, reporting, and artifact writing.
+## Resolve Modeling Choices
 
-These stages describe the flow; they do not require separate modules, classes,
-configuration objects, or files. Keep related stages together when they share
-state and iteration and the path remains readable. Split only when the resulting
-boundary materially improves understanding, independent reuse or verification,
-or maintenance of the current workflow.
+Use the entities, relations, downstream decision, stored and derived fields,
+and recommended smallest design as reasoning prompts. Inspect the repo and
+available data before introducing a representation. Field count alone is not a
+reason to pause: useful dimensions can be numerous.
 
-Evaluate the whole structure. A new entity should remove more confusion or
-duplication than it adds through naming, construction, wiring, navigation, and
-state transfer. A direct script or a single file with local functions remains a
-valid maintainable design whenever it is easy to inspect and change.
-
-## Discussion Trigger
-
-Before coding, pause for a compact design note when the user has described the
-task only as "extract features", "classify", "analyze influence", or similar
-phrasing and the representation is not obvious from the repo.
-
-Use:
-
-```text
-Observed entities:
-Natural relations:
-Downstream decision/report:
-Minimal representation:
-Derived fields:
-Recommended smallest design:
-Open question:
-```
+Resolve modeling choices through context, data inspection, and applicable
+methods first. When a remaining consequential choice needs the user's decision,
+explain the relevant entities, downstream use, recommendation, and open question
+in natural prose or a short list. Otherwise proceed on the established basis.
