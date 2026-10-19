@@ -81,6 +81,9 @@ when multiple strategies satisfy the same behavior. Arithmetic identities and
 facts guaranteed solely by C++ or a third-party library are not independent
 test targets.
 
+An assertion such as `EXPECT_EQ(2 + 2, 4)` proves no project behavior; replacing
+it with more arithmetic assertions does not create a useful test.
+
 Use the smallest representative input that still exercises the claim. Put the
 main assertion first and keep related assertions together. Avoid noisy or large
 inputs unless size itself is part of the behavior being tested.
@@ -125,8 +128,15 @@ split when groups can fail independently and convey different diagnoses. Treat
 
 Names up to roughly 30 characters after the `Test` prefix are normally fine.
 Beyond roughly 40, rewrite or split unless an unavoidable domain term needs
-that space. Move shared setup into a fixture/helper and missing evaluation
-context into a first-line comment; do not extend the name with more clauses.
+that space.
+
+Put shared setup in a fixture, helper, or local builder; use a fixture when every
+case shares the same setup mode. Give a helper or local builder a name that
+carries repeated data-shape details, such as `makeModuleWithExplicitEntryBase`,
+`makeClosedMeshWithSingleHole`, or `bindModuleAndCollectResult`, instead of
+extending every case name. Put missing evaluation context in a first-line
+comment rather than adding more clauses to the name. Do not keep extending a
+case name merely because all current assertions share one body.
 
 ## First-Line Comments
 
@@ -170,20 +180,6 @@ TEST(FillHolesTest, TestFillsSingleHole) {
 
 When drafting a comment, omit it if it adds no useful information. Existing
 comments follow the preservation rules in [comment-style.md](comment-style.md).
-Shared setup belongs in a fixture or local builder; repeated data-shape details
-belong in a helper name rather than every case name.
-
-Move context into a fixture when every case shares the same setup mode. Use a
-helper or local builder whose name states the data shape when setup detail would
-otherwise bloat several case names. Do not keep extending a case name merely
-because all current assertions happen to share one body.
-
-For example, `makeModuleWithExplicitEntryBase`,
-`makeClosedMeshWithSingleHole`, or `bindModuleAndCollectResult` carries setup
-information that would otherwise lengthen every case name.
-
-An assertion such as `EXPECT_EQ(2 + 2, 4)` proves no project behavior; replacing
-it with more arithmetic assertions does not create a useful test.
 
 ## Failure Tests
 

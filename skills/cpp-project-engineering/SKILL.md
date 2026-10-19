@@ -84,11 +84,12 @@ established and consumed. Identify the remaining responsibility before choosing
 private mechanics. Organize the work as evidence, owning operation, contract,
 integration, then implementation detail. Carry these facts and boundaries into
 implementation and review; reopen them only for a concrete gap or conflict.
+Make local mechanical choices directly.
 
 When the design is unsettled, resolve missing behavior and boundaries. If
 credible alternatives differ in observable behavior, public surface,
 dependencies, or architecture, present at least two with pros and cons and
-await confirmation. Make local mechanical choices directly.
+await confirmation.
 
 Before creating an independent construct or changing its file ownership, name
 declaration, implementation, test, and build-registration locations.
@@ -100,8 +101,7 @@ them, and a case they already decide is not a reason to reopen them. Reopen only
 a conflicting point supported by code, an existing contract, or a reproducible
 failure. Present 1-3 grounded options with a recommended tradeoff; proceed on
 independent parts and identify the blocked point explicitly. If missing
-observable behavior blocks implementation, ask the user to choose. Make local
-mechanical choices directly.
+observable behavior blocks implementation, ask the user to choose.
 
 When a spec defines phases, complete the agreed phase and report decisions,
 deviations, validation, and risks before moving to the next, unless several

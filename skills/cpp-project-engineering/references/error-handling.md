@@ -171,8 +171,7 @@ Avoid:
 
 Exception text is diagnostic prose, not a machine-readable interface unless a
 real external protocol explicitly makes it one.
-Similar failures should carry similar useful information; uniform prefixes
-are not a goal by themselves.
+Similar failures should carry similar useful information.
 
 Prefer a direct construction with a fixed message, such as
 `throw std::invalid_argument("...");`. Format only when runtime

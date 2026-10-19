@@ -44,6 +44,19 @@ are deliberate behavior-preserving refactors under explicit direction. Resolve
 a real concern at the boundary or interface; when local code needs contortion,
 inspect that boundary first.
 
+Use `typename` for ordinary template type parameters, including packs.
+Keep this spelling consistent in declarations, definitions, and examples.
+In C++20 and later, put constraints for named templates in one `requires`
+clause on a separate line immediately after the template parameter list, even
+for a single named concept. Reference and combine concepts in that clause;
+use this explicit form by default instead of `template <Concept T>` or
+abbreviated `Concept auto` parameters. Use a trailing clause only when syntax
+or scope requires it, such as a constrained non-template member of a class
+template or a constraint needing function parameter names. Keep constraint
+form, ordering, and placement consistent between matching declarations and
+definitions; preserve constrained expressions, cv/ref forms, and overload
+behavior when changing an existing spelling.
+
 For an internal callback, consumer, or visitor, default to a template parameter
 taken by value and constrain it when the effective standard supports
 constraints. Invoke it as a stable lvalue; do not use a forwarding reference
@@ -61,7 +74,7 @@ external C ABI callback is interop, not this anti-pattern.
 Keep the consumer inlineable through the constrained template:
 
 ```cpp
-template<class Consumer>
+template <typename Consumer>
     requires std::invocable<Consumer&, double, std::span<ScanRun const>>
 void scan(Schedule const& schedule, Consumer consumer) const;
 ```
@@ -70,7 +83,7 @@ This still needs a template entry while adding manual erasure solely to move
 the loop into a `.cpp`:
 
 ```cpp
-template<class Consumer>
+template <typename Consumer>
     requires std::invocable<Consumer&, double, std::span<ScanRun const>>
 void scan(Schedule const& schedule, Consumer consumer) const {
     auto ref = std::ref(consumer);
@@ -188,17 +201,9 @@ public:
 
 private:
     std::unique_ptr<Impl> impl_;
-    int                   retry_count_ = 0;
 
 public:
     explicit Widget(Config const& config);
-    [[nodiscard]] bool ready() const noexcept;
-
-protected:
-    void onStateChanged();
-
-private:
-    void rebuildCache();
 };
 ```
 
