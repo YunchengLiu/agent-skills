@@ -19,28 +19,39 @@ Use the strongest available evidence in this order:
 - If compiler support and standard-library support differ, plan for the lower effective capability.
 - If evidence is missing, conflicting, or too weak to trust, ask the user which standard to target.
 - If the user asks for "modern C++" without a standard, do not silently jump to the newest version.
+- Treat C++26 as an explicit target, not a default modernization baseline.
 
 ## Support checks
 
-- For library-heavy recommendations, verify more than the language mode when possible.
-- Check compiler version, standard-library implementation, and relevant feature-test macros when available.
-- Prefer implementation evidence in this order when the recommendation depends on library support:
-  1. feature-test macros from the relevant headers, often via `<version>`
-  2. vendor implementation status pages for the active standard library or compiler
-  3. build evidence or a minimal local probe
-- If support is still uncertain, ask, mark the recommendation as tentative, or
-  choose a supported alternative instead of presenting the feature as ready.
-- Prefer build evidence or a minimal probe over assumption when the recommendation depends on newer library facilities.
+Library facilities need both compiler parsing support and a library
+implementation; these can advance at different speeds. Check the actual
+compiler version and library. `__cplusplus`, `/std:...`, or `-std=...` alone
+does not establish library support.
 
-Useful verification sources include feature-test macros, cppreference feature-test references, libstdc++ status notes, libc++ status notes, MSVC conformance notes, and local compile probes. Use current sources instead of embedding support tables in the skill.
+Prefer implementation evidence in this order:
 
-## Toolchain notes
+1. Feature-test macros from the relevant headers, often via `<version>`.
+   Check values as well as presence: partial implementations can expose an
+   earlier API revision.
+2. Current vendor status pages for the active compiler and library. Use
+   cppreference feature-test references as a supplement; prefer vendor
+   evidence over memory when exact support matters.
+3. Build evidence or a minimal local probe, rather than an assumption about
+   newer facilities.
 
-- Language support and standard-library support may advance at different speeds.
-- Library-heavy recommendations require both compiler parsing support and the needed library implementation.
-- Do not treat `__cplusplus`, `/std:...`, or `-std=...` alone as enough evidence for newer library facilities.
-- When the exact implementation status matters, prefer vendor sources such as libstdc++ status pages, libc++ feature-test tables, and MSVC conformance notes over memory.
-- C++26 requires extra caution. Treat it as an explicit target, not a default modernization baseline.
+If support remains uncertain, ask, mark the recommendation as tentative, or
+choose a supported alternative. Distinguish an adopted standard revision from
+a proposal or later working draft. Use current sources rather than embedding
+support tables in the skill.
+
+Useful starting points are the [GCC C++ status](https://gcc.gnu.org/projects/cxx-status.html),
+[libstdc++ status](https://gcc.gnu.org/onlinedocs/libstdc++/manual/status.html),
+[Clang C++ status](https://clang.llvm.org/cxx_status.html),
+[libc++ C++23 status](https://libcxx.llvm.org/Status/Cxx23.html), and
+[Microsoft STL changelog](https://github.com/microsoft/STL/wiki/Changelog).
+Choose the page for the actual compiler/library combination. A successful
+probe in a newer local installation does not establish support for older
+consumers.
 
 ## Output rule
 

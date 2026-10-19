@@ -1,6 +1,8 @@
 # Code Modernization
 
-Use this pass after establishing the project profile and effective standard. Code modernization means source-level changes that keep behavior and contracts stable while making C++ code clearer, safer, and more idiomatic within the effective standard.
+After establishing the project profile and effective standard, improve C++
+expression, clarity, and safety within that standard while preserving behavior
+and contracts.
 
 ## Scope
 
@@ -9,11 +11,18 @@ Use this pass after establishing the project profile and effective standard. Cod
   internal interfaces and affected callers together when the task needs it.
 - Prefer one clear reason for each patch group: intent, lifetime, safety, cost, or readability.
 - When the same issue recurs across modules, implement a contained slice and record the broader migration direction.
-- Treat the review lenses below as required inputs. Add context-specific improvements when the surrounding code, domain model, or performance profile points to a better C++ expression.
+
+Use [migration-patterns.md](migration-patterns.md) for concrete replacement
+candidates. For safety-sensitive changes, apply the relevant ownership,
+bounds, integer, state, and synchronization checks in
+[safe-idioms.md](safe-idioms.md); choose focused diagnostic evidence from
+[compiler-hardening.md](compiler-hardening.md) when it can resolve a real
+uncertainty.
 
 ## Review lenses
 
-Use these lenses together as a compact code-level review checklist.
+Apply all four lenses. Add context-specific improvements when the surrounding
+code, domain model, or performance profile points to a better C++ expression.
 
 ### Modern expression
 

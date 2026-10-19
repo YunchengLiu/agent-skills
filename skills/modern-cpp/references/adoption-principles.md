@@ -3,23 +3,18 @@
 Choose modern facilities by the job they make clearer or safer. A supported
 facility with a concrete local benefit is a normal implementation choice.
 
-## Default goals
-
-- Improve correctness and resource safety.
-- Clarify interfaces, contracts, and ownership.
-- Reduce accidental complexity.
-- Preserve readability, diagnostics, and debuggability.
-- Keep maintenance costs and relevant consumer requirements visible.
-
 ## Default decision checklist
 
 Adopt within the effective standard and library support when it provides one
 or more of these benefits:
 
-- It makes intent or contracts clearer.
-- It reduces a real class of bugs.
-- It removes boilerplate without obscuring behavior.
+- It clarifies intent, interfaces, contracts, or ownership.
+- It improves correctness or resource safety by reducing a real class of bugs.
+- It reduces accidental complexity or boilerplate without obscuring behavior.
 - It keeps diagnostics and debugging reasonable for the team.
+
+Preserve readability, diagnostics, and debuggability in every choice; keep
+maintenance costs and relevant consumer requirements visible.
 
 Prefer not to adopt when most of these are true:
 

@@ -9,6 +9,24 @@ Apply these semantic style defaults across projects unless the repository define
 - Make borrowing, ownership, and lifetime visible in types and function signatures.
 - Use RAII to make cleanup automatic and exception-safe.
 - Prefer standard-library facilities over custom wrappers when they carry the right meaning.
+- Use `typename` for ordinary template type parameters, including packs.
+  Keep this spelling consistent in declarations, definitions, and examples.
+
+## Template constraint style
+
+- In C++20 and later, use explicit `typename` parameters followed immediately
+  by one `requires` clause on its own line for constrained named templates.
+  Keep this form even for one concept, such as `requires std::integral<T>`;
+  `template <Concept T>` and abbreviated `Concept auto` parameters are not the
+  default for named template interfaces.
+- Define and reuse meaningful named concepts; reference them and combine
+  related conditions in the `requires` clause.
+- Use a trailing `requires` clause only when syntax or the required scope
+  calls for it, such as a constrained non-template member of a class template
+  or a constraint that needs function parameter names.
+- Keep constraint form, ordering, and placement consistent between matching
+  declarations and definitions. When changing an existing spelling, preserve
+  the constrained expressions, cv/ref forms, and overload behavior.
 
 ## Abstraction rules
 
@@ -49,9 +67,9 @@ Apply these semantic style defaults across projects unless the repository define
 - Use stronger types when they prevent a realistic misuse, preserve an
   important invariant, or establish a meaningful boundary. Semantic distinction
   alone does not require a wrapper type.
-- Apply specifiers, qualifiers, attributes, and type deduction whenever what
-  they express is true of the code; omit one only when it is false or
-  uncertain, or would require reshaping the design. In particular:
+- Apply specifiers, qualifiers, attributes, and type deduction when they
+  truthfully describe the code; omit them only when false, uncertain, or
+  requiring a design change. In particular:
   - decide `noexcept` from the implementation and mark every function that
     cannot throw;
   - make unmodified locals and by-value parameters `const`, on the definition
