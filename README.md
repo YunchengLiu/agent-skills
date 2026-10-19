@@ -1,4 +1,4 @@
-# codex-skills
+# agent-skills
 
 Personal skills for coding agents, based on my day-to-day engineering and
 research work.
