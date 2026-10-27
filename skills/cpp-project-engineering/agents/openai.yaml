@@ -1,4 +1,0 @@
-interface:
-  display_name: "C++ Project Engineering"
-  short_description: "Detailed C++ and CMake project discipline"
-  default_prompt: "Use $cpp-project-engineering to implement or review this C++ project change against my full engineering baseline."
